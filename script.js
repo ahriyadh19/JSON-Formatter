@@ -18,8 +18,10 @@ function formatJSON() {
 
 function clearJSON() {
     document.getElementById('jsonInput').value = '';
+    document.getElementById('jsonOutput').innerText = '';
 }
 
+// Define the copyToClipboard function
 function copyToClipboard(jsonOutput, callback) {
     if (jsonOutput.textContent === '') {
         if (callback) {

@@ -1,64 +1,70 @@
+/* Reset styles and global adjustments */
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
+
+/* Body styles */
 body {
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  height: 100vh; 
+  min-height: 100vh;
+  margin: 0;
 }
 
+/* Header styles */
 header {
   background-color: #333;
   color: white;
   text-align: center;
   padding: 1rem 0;
+  border-radius: 0 0 50px 50px;
 }
 
+/* Main content styles */
 main {
   padding: 2rem;
-  margin: 1rem;
   flex: 1;
 }
 
+/* Form styles */
 form {
   text-align: center;
 }
 
+/* Textarea styles */
 textarea {
-  width: 100%;
-  height: 200px;
   resize: none;
 }
 
-button {
-  margin: 1rem;
-}
-
+/* JSON Output styles */
 #jsonOutput {
   white-space: pre;
   font-family: "Courier New", monospace;
   border: 1px solid #ccc;
   padding: 1rem;
   overflow: auto;
-  max-height: 400px;
   max-width: 100%;
 }
 
+/* Footer styles */
 footer {
   background-color: #333;
   color: white;
   text-align: center;
   padding: 1rem 0;
+  border-radius: 50px 50px 0 0;
 }
 
+/* Action Button styles */
 .action-button {
   display: flex;
   align-items: center;
-  width: 200px; 
-  height: 40px; 
-  margin: 0.5rem;
+  width: 150px; 
+  height: 40px;
+  margin: 1rem;
   background-color: #616161;
   color: white;
   border: none;
@@ -74,15 +80,18 @@ footer {
   border-radius: 10px;
 }
 
+/* Icon styles */
 .icon {
-  margin-right: 5px; 
+  margin-right: 5px;
 }
 
+/* Button Container styles */
 #button-container {
   display: flex;
   justify-content: space-evenly;
 }
 
+/* Popup styles */
 .popup {
   display: none;
   position: fixed;
@@ -109,13 +118,27 @@ footer {
   font-size: 30px;
   cursor: pointer;
 }
+
 .pop-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
 
+.footer-link {
+    color: #ffffff;
+    text-decoration: none; 
+}
+
+.footer-link:hover {
+    text-decoration: underline; 
+}
+.footer-link:visited {
+    color: #ffffff; 
+    text-decoration: none;
+}
+
 .popup-content {
-  animation: popupFadeIn 0.3s ease-in-out;
+  animation: popupFadeIn 1s ease-in-out;
 }
 
 @keyframes popupFadeIn {

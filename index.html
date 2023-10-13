@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="asset/favicon-16x16.png">
@@ -15,29 +16,28 @@
 </head>
 
 <body>
-    <header>
+    <header class="container">
         <h2>JSON Formatter</h2>
     </header>
-    <main>
+    <main class="container">
         <form>
-            <textarea id="jsonInput" placeholder="Enter JSON here..."></textarea>
-            <div id="button-container">
-                <button type="button" onclick="formatJSON" class="action-button">
-                    <span class="icon"><i class="fas fa-play"></i></span>
-                    <span>Format JSON</span>
+            <div class="form-group">
+                <textarea id="jsonInput" class="form-control" rows="5" placeholder="Enter JSON here..."></textarea>
+            </div>
+            <div class="d-flex justify-content-center m-4">
+                <button type="button" onclick="formatJSON" class="btn btn-primary mx-2">
+                    <i class="fas fa-play"></i> Format JSON
                 </button>
-                <button type="button" onclick="clearJSON" class="action-button">
-                    <span class="icon"><i class="fas fa-eraser"></i></span>
-                    <span>Clear</span>
+                <button type="button" onclick="clearJSON()" class="btn btn-secondary mx-2">
+                    <i class="fas fa-eraser"></i> Clear input
                 </button>
-                <button type="button" id="copyJsonButton" onclick="copyToClipboard" class="action-button">
-                    <span class="icon"><i class="fas fa-copy"></i></span>
-                    <span>Copy</span>
+                <button type="button" id="copyJsonButton" onclick="copyToClipboard" class="btn btn-success mx-2">
+                    <i class="fas fa-copy"></i> Copy output
                 </button>
             </div>
         </form>
 
-        <div id="jsonOutput"></div>
+        <div id="jsonOutput" class="my-4"></div>
 
         <div id="popup" class="popup">
             <div class="popup-content">
@@ -46,11 +46,11 @@
                 <p id="popup-message"></p>
             </div>
         </div>
-
     </main>
-    <footer>
-        <p>© 2023 ahriyadh19</p>
+    <footer class="container text-center">
+        <p>© 2023 <a href="https://ahriyadh19.github.io/Portfolio/" class="footer-link">ahriyadh19</a></p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 
