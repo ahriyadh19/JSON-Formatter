@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="asset/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="asset/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="asset/favicon-16x16.png">
+    <link rel="manifest" href="asset/site.webmanifest">
+    <link rel="shortcut icon" href="asset/favicon.ico" type="image/x-icon">
+    <title>JSON Formatter</title>
+</head>
+
+<body>
+    <header>
+        <h2>JSON Formatter</h2>
+    </header>
+    <main>
+        <form>
+            <textarea id="jsonInput" placeholder="Enter JSON here..."></textarea>
+            <div id="button-container">
+                <button type="button" onclick="formatJSON" class="action-button">
+                    <span class="icon"><i class="fas fa-play"></i></span>
+                    <span>Format JSON</span>
+                </button>
+                <button type="button" onclick="clearJSON" class="action-button">
+                    <span class="icon"><i class="fas fa-eraser"></i></span>
+                    <span>Clear</span>
+                </button>
+                <button type="button" id="copyJsonButton" onclick="copyToClipboard" class="action-button">
+                    <span class="icon"><i class="fas fa-copy"></i></span>
+                    <span>Copy</span>
+                </button>
+            </div>
+        </form>
+
+        <div id="jsonOutput"></div>
+
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" id="close-popup">&times;</span>
+                <i class="fa-solid fa-circle-info pop-icon"></i>
+                <p id="popup-message"></p>
+            </div>
+        </div>
+
+    </main>
+    <footer>
+        <p>© 2023 ahriyadh19</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
