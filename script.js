@@ -1,9 +1,6 @@
 'use strict';
 const jsonInput = document.getElementById('jsonInput');
-
-
 jsonInput.addEventListener('input', formatJSON);
-
 
 function formatJSON() {
     const jsonInputValue = jsonInput.value;
@@ -49,7 +46,6 @@ function copyToClipboard(jsonOutput, callback) {
             callback(false, 'Unable to copy JSON: ' + err);
         }
     }
-
     window.getSelection().removeAllRanges();
 }
 
