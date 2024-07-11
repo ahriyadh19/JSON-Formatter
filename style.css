@@ -42,12 +42,37 @@ textarea {
 
 /* JSON Output styles */
 #jsonOutput {
-  white-space: pre;
   font-family: "Courier New", monospace;
   border: 1px solid #ccc;
   padding: 1rem;
   overflow: auto;
   max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Tree view styles */
+.tree-view ul {
+  list-style-type: none;
+}
+
+.tree-view li {
+  margin-left: 1rem;
+}
+
+.tree-view .toggle::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.tree-view .toggle.open::before {
+  content: '▼';
+}
+
+.hidden {
+  display: none;
 }
 
 /* Footer styles */
