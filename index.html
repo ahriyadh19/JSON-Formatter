@@ -25,14 +25,17 @@
                 <textarea id="jsonInput" class="form-control" rows="3" placeholder="Enter JSON here..."></textarea>
             </div>
             <div id="button-container">
-                <button type="button" onclick="formatJSON()" class="action-button">
-                    <i class="fa-solid fa-arrow-right-arrow-left icon"></i> Format
-                </button>
                 <button type="button" onclick="clearJSON()" class="action-button" id="clearJsonButton">
                     <i class="fa-solid fa-eraser icon"></i> Clear
                 </button>
+                <button type="button" onclick="formatJSON()" class="action-button">
+                    <i class="fa-solid fa-arrow-right-arrow-left icon"></i> Format
+                </button>
                 <button type="button" id="copyJsonButton" onclick="copyToClipboard()" class="action-button">
                     <i class="fa-solid fa-copy icon"></i> Copy
+                </button>
+                <button type="button" id="pasteJsonButton" onclick="pasteFromClipboard()" class="action-button">
+                    <i class="fa-solid fa-paste icon"></i> Paste
                 </button>
             </div>
         </form>

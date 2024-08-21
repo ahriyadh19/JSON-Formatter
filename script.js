@@ -92,4 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return ul;
     }
+
+    // Define pasteFromClipboard globally
+    window.pasteFromClipboard = async function () {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (!text) {
+                displayPopup('Clipboard is empty or does not contain text.');
+                return;
+            }
+            jsonInput.value = text;
+
+            formatJSON();
+        } catch (err) {
+            displayPopup('Error: Unable to paste JSON from clipboard');
+        }
+    };
 });
