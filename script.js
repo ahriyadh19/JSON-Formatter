@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const popupMessage = document.getElementById('popup-message');
     const closePopupButton = document.getElementById('close-popup');
 
+    // Update the year in the footer
+    document.getElementById('current-year').textContent = `( ${2023} - ${new Date().getFullYear()} )`;
+
     // Format JSON on input
     jsonInput.addEventListener('input', formatJSON);
 

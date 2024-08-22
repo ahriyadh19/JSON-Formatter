@@ -24,18 +24,20 @@
             <div class="form-group">
                 <textarea id="jsonInput" class="form-control" rows="3" placeholder="Enter JSON here..."></textarea>
             </div>
-            <div id="button-container">
-                <button type="button" onclick="clearJSON()" class="action-button" id="clearJsonButton">
-                    <i class="fa-solid fa-eraser icon"></i> Clear
+            <div id="button-container" class="grid-container">
+                <button type="button" onclick="clearJSON()" class="action-button" id="clearJsonButton" title="Clear">
+                    <i class="fa-solid fa-eraser icon"></i>
                 </button>
-                <button type="button" onclick="formatJSON()" class="action-button">
-                    <i class="fa-solid fa-arrow-right-arrow-left icon"></i> Format
+                <button type="button" onclick="formatJSON()" class="action-button" title="Format">
+                    <i class="fa-solid fa-arrow-right-arrow-left icon"></i>
                 </button>
-                <button type="button" id="copyJsonButton" onclick="copyToClipboard()" class="action-button">
-                    <i class="fa-solid fa-copy icon"></i> Copy
+                <button type="button" id="copyJsonButton" onclick="copyToClipboard()" class="action-button"
+                    title="Copy">
+                    <i class="fa-solid fa-copy icon"></i>
                 </button>
-                <button type="button" id="pasteJsonButton" onclick="pasteFromClipboard()" class="action-button">
-                    <i class="fa-solid fa-paste icon"></i> Paste
+                <button type="button" id="pasteJsonButton" onclick="pasteFromClipboard()" class="action-button"
+                    title="Paste">
+                    <i class="fa-solid fa-paste icon"></i>
                 </button>
             </div>
         </form>
@@ -51,7 +53,8 @@
         </div>
     </main>
     <footer class="container text-center">
-        <p>© 2024 <a href="https://ahriyadh19.github.io/Portfolio/" class="footer-link">ahriyadh19</a></p>
+        <p id="footer-text">© <span id="current-year"></span> <a href="https://ahriyadh19.github.io/Portfolio/"
+                class="footer-link">ahriyadh19</a></p>
     </footer>
 
     <script src="script.js"></script>
