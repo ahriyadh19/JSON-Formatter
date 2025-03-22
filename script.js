@@ -146,8 +146,7 @@ async function formatJSON() {
         toastr.success("Formatted JSON successfully");
 
     } catch (error) {
-        toastr.error("Invalid JSON" < br > + error);
-
+        toastr.error("Invalid JSON: <br>" + error);
     } finally {
         loading.style.display = 'none';
     }
@@ -164,7 +163,7 @@ async function copyToClipboard() {
             toastr.success("Copied to clipboard");
         }
     } catch (error) {
-        toastr.error("Failed to copy text" < br > + error);
+        toastr.error("Failed to copy text: <br>" + error);
     }
 }
 
@@ -180,7 +179,7 @@ async function pasteFromClipboard() {
         }
 
     } catch (error) {
-        toastr.error("Failed to paste text" < br > + error);
+        toastr.error("Failed to paste text: <br>" + error);
     }
 }
 
@@ -199,7 +198,7 @@ function clearJSON() {
         toastr.success("Cleared JSON");
 
     } catch (error) {
-        toastr.error("Failed to clear JSON" < br > + error);
+        toastr.error("Failed to clear JSON: <br>" + error);
     }
 }
 
@@ -208,10 +207,10 @@ toastr.options = {
     "closeButton": true,
     "newestOnTop": true,
     "progressBar": true,
-    "positionClass": "toast-top-center",
+    "positionClass": "toast-bottom-center",
     "preventDuplicates": true,
     "onclick": null,
-    "showDuration": "1000",
+    "showDuration": "300",
     "hideDuration": "1000",
     "timeOut": "5000",
     "extendedTimeOut": "1000",
