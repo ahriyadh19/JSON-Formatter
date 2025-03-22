@@ -14,9 +14,7 @@ themeToggle.addEventListener('click', () => {
         : '<i class="fa-solid fa-moon"></i>';
 });
 
-// Improved formatJSON with loading state
-// Enhanced tree view with syntax highlighting
-// Update the createTreeView function with proper toggle handling
+
 function createTreeView(obj, isRoot = false) {
     const ul = document.createElement('ul');
     ul.className = 'tree-view';
