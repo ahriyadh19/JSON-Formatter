@@ -153,51 +153,37 @@ body {
   margin-left: 8px;
 }
 
-.child-count {
-  color: var(--text-color);
-  opacity: 0.6;
-  font-size: 0.8em;
-}
-
-.value.null {
-  color: #ff4081;
-}
-
-.value.boolean {
-  color: #ff9100;
-}
-
 .toggle:not(.toggle-visible) {
   visibility: hidden;
   pointer-events: none;
 }
 
-/* Value type colors */
+/* Improved value type colors */
 .value.string {
-  color: #4caf50;
-} /* Green */
+  color: #2ecc71; /* Brighter green for strings */
+}
 .value.number {
-  color: #f44336;
-} /* Red */
+  color: #e74c3c; /* Richer red for numbers */
+}
 .value.boolean {
-  color: #ff9800;
-} /* Orange */
+  color: #f39c12; /* Vibrant orange for booleans */
+}
 .value.null {
-  color: #e91e63;
-} /* Pink */
+  color: #9b59b6; /* Softer purple for null values */
+}
 
-/* Type indicator colors */
+/* Improved type indicator colors */
 .type-indicator.array {
-  color: #2196f3;
-} /* Blue */
+  color: #3498db; /* Bright blue for arrays */
+}
 .type-indicator.object {
-  color: #9c27b0;
-} /* Purple */
+  color: #8e44ad; /* Deep purple for objects */
+}
 
-/* Child count styling */
+/* Improved child count styling */
 .child-count {
   color: var(--text-color);
-  opacity: 0.7;
+  opacity: 0.8; /* Slightly more visible */
   font-size: 0.9em;
   margin-left: 8px;
 }
