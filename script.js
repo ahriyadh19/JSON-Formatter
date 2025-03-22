@@ -132,18 +132,20 @@ async function formatJSON() {
     const loading = document.getElementById('loading');
 
     try {
+        if (!jsonInput.value) {
+            toastr.error("No JSON to format");
+            return;
+        }
         loading.style.display = 'block';
-        await new Promise(resolve => setTimeout(resolve, 200)); // Simulate processing
-
+        await new Promise(resolve => setTimeout(resolve, 300)); // Simulate processing
         const parsed = JSON.parse(jsonInput.value);
         jsonOutput.innerHTML = '';
         jsonOutput.appendChild(createTreeView(parsed, true));
         jsonOutput.style.display = 'block'; // Show the output when data is available
 
     } catch (error) {
-        displayPopup(`Invalid JSON: ${error.message}`);
-        jsonOutput.innerHTML = `<span class="error">${error.message}</span>`;
-        jsonOutput.style.display = 'block'; // Show the output even for errors
+        toastr.error("Invalid JSON" < br > + error);
+
     } finally {
         loading.style.display = 'none';
     }
@@ -153,10 +155,14 @@ async function formatJSON() {
 async function copyToClipboard() {
     try {
         const output = document.getElementById('jsonOutput').textContent;
+        if (!output) {
+            toastr.error("No JSON to copy");
+            return;
+        }
         await navigator.clipboard.writeText(output);
-        showToast('Copied to clipboard!', 'success');
+        toastr.success("Copied to clipboard");
     } catch (error) {
-        showToast('Failed to copy text', 'error');
+        toastr.error("Failed to copy text");
     }
 }
 
@@ -164,9 +170,9 @@ async function pasteFromClipboard() {
     try {
         const text = await navigator.clipboard.readText();
         document.getElementById('jsonInput').value = text;
-        showToast('Pasted from clipboard!', 'success');
+        toastr.suscess("Pasted from clipboard");
     } catch (error) {
-        showToast('Failed to paste from clipboard', 'error');
+        toastr.error("Failed to paste text");
     }
 }
 
@@ -177,16 +183,24 @@ function clearJSON() {
     jsonInput.value = '';
     jsonOutput.textContent = '';
     jsonOutput.style.display = 'none'; // Hide the output when cleared
-    showToast('Cleared all content', 'info');
+
+    toastr.info("Cleared JSON");
 }
 
-function showToast(message, type) {
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
 
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+toastr.options = {
+    "closeButton": true,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "1000",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
 }
