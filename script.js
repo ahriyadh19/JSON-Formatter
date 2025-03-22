@@ -1,114 +1,147 @@
-'use strict';
+// Add theme toggle functionality
+const themeToggle = document.getElementById('themeToggle');
+const currentTheme = localStorage.getItem('theme') || 'light';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.body.setAttribute('data-theme', currentTheme);
+themeToggle.innerHTML = currentTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+
+themeToggle.addEventListener('click', () => {
+    const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeToggle.innerHTML = newTheme === 'dark'
+        ? '<i class="fa-solid fa-sun"></i>'
+        : '<i class="fa-solid fa-moon"></i>';
+});
+
+// Improved formatJSON with loading state
+async function formatJSON() {
     const jsonInput = document.getElementById('jsonInput');
     const jsonOutput = document.getElementById('jsonOutput');
-    const copyJsonButton = document.getElementById('copyJsonButton');
-    const popup = document.getElementById('popup');
-    const popupMessage = document.getElementById('popup-message');
-    const closePopupButton = document.getElementById('close-popup');
+    const loading = document.getElementById('loading');
 
-    // Update the year in the footer
-    document.getElementById('current-year').textContent = `( ${2023} - ${new Date().getFullYear()} )`;
+    try {
+        loading.style.display = 'block';
+        await new Promise(resolve => setTimeout(resolve, 200)); // Simulate processing
 
-    // Format JSON on input
-    jsonInput.addEventListener('input', formatJSON);
+        const parsed = JSON.parse(jsonInput.value);
+        jsonOutput.innerHTML = '';
+        jsonOutput.appendChild(createTreeView(parsed, true));
+    } catch (error) {
+        displayPopup(`Invalid JSON: ${error.message}`);
+        jsonOutput.innerHTML = `<span class="error">${error.message}</span>`;
+    } finally {
+        loading.style.display = 'none';
+    }
+}
 
-    // Clear JSON input and output
-    document.getElementById('clearJsonButton').addEventListener('click', clearJSON);
+// Enhanced tree view with syntax highlighting
+// Update the createTreeView function with proper toggle handling
+function createTreeView(obj, isRoot = false) {
+    const ul = document.createElement('ul');
+    ul.className = 'tree-view';
 
-    // Copy JSON to clipboard
-    copyJsonButton.addEventListener('click', () => {
-        if (jsonOutput.textContent === '') {
-            displayPopup('JSON output is empty');
-            return;
-        }
+    const isArray = Array.isArray(obj);
+    const entries = Object.entries(obj);
 
-        navigator.clipboard.writeText(jsonOutput.textContent)
-            .then(() => displayPopup('JSON copied to clipboard!'))
-            .catch(err => displayPopup('Error: Unable to copy JSON'));
-    });
-
-    // Display popup with message
-    function displayPopup(message) {
-        popup.style.display = 'block';
-        popupMessage.textContent = message;
+    if (!entries.length && typeof obj === 'object') {
+        // Handle empty objects/arrays
+        const type = isArray ? 'array' : 'object';
+        const li = createNode({
+            type,
+            key: '',
+            value: isArray ? '[ ]' : '{ }',
+            childCount: 0
+        });
+        return li.closest('ul') || ul;
     }
 
-    // Close popup on click
-    closePopupButton.addEventListener('click', () => {
-        popup.style.display = 'none';
-    });
+    for (const [key, value] of entries) {
+        const nodeType = getValueType(value);
+        const childCount = nodeType === 'array' ? value.length :
+            nodeType === 'object' ? Object.keys(value).length : 0;
 
-    // Close popup when clicking outside of it
-    window.addEventListener('click', event => {
-        if (event.target === popup) {
-            popup.style.display = 'none';
-        }
-    });
-
-    function formatJSON() {
-        const jsonInputValue = jsonInput.value;
-        try {
-            const parsedJSON = JSON.parse(jsonInputValue);
-            const formattedTreeView = createTreeView(parsedJSON, true);
-            jsonOutput.innerHTML = '';
-            jsonOutput.appendChild(formattedTreeView);
-        } catch (error) {
-            jsonOutput.innerText = 'Invalid JSON: ' + error.message;
-        }
-    }
-
-    function clearJSON() {
-        jsonInput.value = '';
-        jsonOutput.innerText = '';
-    }
-
-    function createTreeView(obj, isRoot = false) {
-        const ul = document.createElement('ul');
-        ul.classList.add('tree-view');
-
-        Object.keys(obj).forEach(key => {
-            const li = document.createElement('li');
-            if (typeof obj[key] === 'object' && obj[key] !== null) {
-                const span = document.createElement('span');
-                span.textContent = key;
-                span.classList.add('toggle');
-                span.addEventListener('click', () => {
-                    span.classList.toggle('open');
-                    childUl.classList.toggle('hidden');
-                });
-
-                const childUl = createTreeView(obj[key]);
-                if (isRoot) {
-                    span.classList.add('open');
-                } else {
-                    childUl.classList.add('hidden');
-                }
-                li.appendChild(span);
-                li.appendChild(childUl);
-            } else {
-                li.textContent = `${key}: ${obj[key]}`;
-            }
-            ul.appendChild(li);
+        const li = createNode({
+            type: nodeType,
+            key: isArray ? `[${key}]` : key,
+            value: value,
+            childCount: childCount,
+            isArray: isArray
         });
 
-        return ul;
+        ul.appendChild(li);
     }
 
-    // Define pasteFromClipboard globally
-    window.pasteFromClipboard = async function () {
-        try {
-            const text = await navigator.clipboard.readText();
-            if (!text) {
-                displayPopup('Clipboard is empty or does not contain text.');
-                return;
-            }
-            jsonInput.value = text;
+    return ul;
+}
 
-            formatJSON();
-        } catch (err) {
-            displayPopup('Error: Unable to paste JSON from clipboard');
-        }
-    };
+function createNode({ type, key, value, childCount, isArray }) {
+    const li = document.createElement('li');
+    const container = document.createElement('div');
+    container.className = 'node-container';
+
+    const toggle = document.createElement('span');
+    toggle.className = 'toggle';
+
+    const keySpan = document.createElement('span');
+    keySpan.className = 'key';
+    keySpan.textContent = key;
+
+    const valueSpan = document.createElement('span');
+    valueSpan.className = 'value';
+
+    if (type === 'object' || type === 'array') {
+        // Handle objects/arrays
+        toggle.classList.add('toggle-visible');
+        valueSpan.innerHTML = `
+            <span class="type-indicator ${type}">${type}</span>
+            <span class="child-count">(${childCount} items)</span>
+        `;
+
+        const childUl = type === 'array' ? createTreeView(value) : createTreeView(value);
+        childUl.classList.add('hidden');
+
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('open');
+            childUl.classList.toggle('hidden');
+        });
+
+        container.append(toggle, keySpan, valueSpan);
+        li.append(container, childUl);
+    } else {
+        // Handle primitive values
+        valueSpan.className = `value ${type}`;
+        valueSpan.innerHTML = formatPrimitive(value, type);
+
+        if (key) container.append(keySpan, ': ');
+        container.append(valueSpan);
+        li.append(container);
+    }
+
+    return li;
+}
+
+function getValueType(value) {
+    if (value === null) return 'null';
+    if (Array.isArray(value)) return 'array';
+    if (typeof value === 'object') return 'object';
+    return typeof value;
+}
+
+function formatPrimitive(value, type) {
+    switch (type) {
+        case 'string': return `"${value}"`;
+        case 'null': return 'null';
+        default: return value;
+    }
+}
+
+// Add keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+        copyToClipboard();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
+        pasteFromClipboard();
+    }
 });
