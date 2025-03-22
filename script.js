@@ -170,9 +170,15 @@ async function pasteFromClipboard() {
     try {
         const text = await navigator.clipboard.readText();
         document.getElementById('jsonInput').value = text;
-        toastr.suscess("Pasted from clipboard");
+        if (text) {
+            toastr.success("Pasted from clipboard");
+            formatJSON();
+        }else{
+            toastr.error("No text to paste");
+        }
+
     } catch (error) {
-        toastr.error("Failed to paste text");
+        toastr.error("Failed to paste text< br >" + error);
     }
 }
 
