@@ -15,26 +15,6 @@ themeToggle.addEventListener('click', () => {
 });
 
 // Improved formatJSON with loading state
-async function formatJSON() {
-    const jsonInput = document.getElementById('jsonInput');
-    const jsonOutput = document.getElementById('jsonOutput');
-    const loading = document.getElementById('loading');
-
-    try {
-        loading.style.display = 'block';
-        await new Promise(resolve => setTimeout(resolve, 200)); // Simulate processing
-
-        const parsed = JSON.parse(jsonInput.value);
-        jsonOutput.innerHTML = '';
-        jsonOutput.appendChild(createTreeView(parsed, true));
-    } catch (error) {
-        displayPopup(`Invalid JSON: ${error.message}`);
-        jsonOutput.innerHTML = `<span class="error">${error.message}</span>`;
-    } finally {
-        loading.style.display = 'none';
-    }
-}
-
 // Enhanced tree view with syntax highlighting
 // Update the createTreeView function with proper toggle handling
 function createTreeView(obj, isRoot = false) {
@@ -145,3 +125,68 @@ document.addEventListener('keydown', (e) => {
         pasteFromClipboard();
     }
 });
+
+async function formatJSON() {
+    const jsonInput = document.getElementById('jsonInput');
+    const jsonOutput = document.getElementById('jsonOutput');
+    const loading = document.getElementById('loading');
+
+    try {
+        loading.style.display = 'block';
+        await new Promise(resolve => setTimeout(resolve, 200)); // Simulate processing
+
+        const parsed = JSON.parse(jsonInput.value);
+        jsonOutput.innerHTML = '';
+        jsonOutput.appendChild(createTreeView(parsed, true));
+        jsonOutput.style.display = 'block'; // Show the output when data is available
+
+    } catch (error) {
+        displayPopup(`Invalid JSON: ${error.message}`);
+        jsonOutput.innerHTML = `<span class="error">${error.message}</span>`;
+        jsonOutput.style.display = 'block'; // Show the output even for errors
+    } finally {
+        loading.style.display = 'none';
+    }
+}
+
+
+async function copyToClipboard() {
+    try {
+        const output = document.getElementById('jsonOutput').textContent;
+        await navigator.clipboard.writeText(output);
+        showToast('Copied to clipboard!', 'success');
+    } catch (error) {
+        showToast('Failed to copy text', 'error');
+    }
+}
+
+async function pasteFromClipboard() {
+    try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('jsonInput').value = text;
+        showToast('Pasted from clipboard!', 'success');
+    } catch (error) {
+        showToast('Failed to paste from clipboard', 'error');
+    }
+}
+
+function clearJSON() {
+    const jsonInput = document.getElementById('jsonInput');
+    const jsonOutput = document.getElementById('jsonOutput');
+
+    jsonInput.value = '';
+    jsonOutput.textContent = '';
+    jsonOutput.style.display = 'none'; // Hide the output when cleared
+    showToast('Cleared all content', 'info');
+}
+
+function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}

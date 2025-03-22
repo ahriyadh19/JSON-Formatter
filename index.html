@@ -19,9 +19,12 @@
 <body>
     <header class="container">
         <div class="header-content">
-            <h2>JSON Formatter</h2>
-            <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
-                <i class="fa-solid fa-moon"></i>
+            <h1 class="site-title">JSON Formatter</h1>
+            <p><a href="https://ahriyadh19.github.io/Portfolio/" target="_blank" rel="noopener noreferrer">
+                    ahriyadh19
+                </a></p>
+            <button id="themeToggle" class="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon" aria-hidden="true"></i>
             </button>
         </div>
     </header>
@@ -34,20 +37,24 @@
             <div class="form-group">
                 <textarea id="jsonInput" class="form-control" rows="3" placeholder="Enter JSON here..."></textarea>
             </div>
-            <div id="button-container" class="grid-container">
+            <div id="button-container">
                 <button type="button" onclick="clearJSON()" class="action-button" id="clearJsonButton" title="Clear">
                     <i class="fa-solid fa-eraser icon"></i>
+                    <span class="button-text">Clear</span>
                 </button>
                 <button type="button" onclick="formatJSON()" class="action-button" title="Format">
                     <i class="fas fa-code"></i>
+                    <span class="button-text">Format</span>
                 </button>
                 <button type="button" id="copyJsonButton" onclick="copyToClipboard()" class="action-button"
                     title="Copy">
                     <i class="fa-solid fa-copy icon"></i>
+                    <span class="button-text">Copy</span>
                 </button>
                 <button type="button" id="pasteJsonButton" onclick="pasteFromClipboard()" class="action-button"
                     title="Paste">
                     <i class="fa-solid fa-paste icon"></i>
+                    <span class="button-text">Paste</span>
                 </button>
             </div>
         </form>
@@ -55,10 +62,6 @@
         <div id="jsonOutput" class="my-4"></div>
 
     </main>
-    <footer class="container text-center">
-        <p id="footer-text">© <span id="current-year"></span> <a href="https://ahriyadh19.github.io/Portfolio/"
-                class="footer-link">ahriyadh19</a></p>
-    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="script.js"></script>

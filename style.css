@@ -1,19 +1,23 @@
 :root {
-  --primary-color: #2196f3;
-  --background-color: #ffffff;
-  --text-color: #212121;
-  --surface-color: #f5f5f5;
-  --border-color: #e0e0e0;
-  --hover-color: rgba(0, 0, 0, 0.05);
+  --primary-color: #0056d2; /* Slightly deeper blue for better contrast */
+  --background-color: #f8f9fa; /* Softer light background */
+  --text-color: #212529; /* Darker text for better readability */
+  --surface-color: #ffffff; /* Pure white for surfaces */
+  --border-color: #ced4da; /* Subtle border color */
+  --hover-color: rgba(0, 86, 210, 0.1); /* Light blue hover effect */
+  --focus-color: rgba(0, 86, 210, 0.3); /* Focus outline color */
+  --shadow-color: rgba(0, 0, 0, 0.1); /* Subtle shadow for hover effects */
 }
 
 [data-theme="dark"] {
-  --primary-color: #90caf9;
-  --background-color: #121212;
-  --text-color: #ffffff;
-  --surface-color: #1e1e1e;
-  --border-color: #373737;
-  --hover-color: rgba(255, 255, 255, 0.05);
+  --primary-color: #4dabf7; /* Softer blue for dark mode */
+  --background-color: #1e1e1e; /* Darker background */
+  --text-color: #e0e0e0; /* Light gray text for readability */
+  --surface-color: #2a2a2a; /* Slightly lighter surface color */
+  --border-color: #444444; /* Subtle border for dark mode */
+  --hover-color: rgba(77, 171, 247, 0.1); /* Light blue hover effect */
+  --focus-color: rgba(77, 171, 247, 0.3); /* Focus outline color */
+  --shadow-color: rgba(0, 0, 0, 0.2); /* Slightly stronger shadow for dark mode */
 }
 
 body {
@@ -26,6 +30,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem 0;
 }
 
 .theme-toggle {
@@ -35,25 +40,62 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 50%;
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.2s;
 }
 
 .theme-toggle:hover {
   transform: rotate(20deg);
+  background-color: var(--hover-color);
 }
 
 .action-button {
+  align-items: center;
   background-color: var(--primary-color);
-  color: white;
-  padding: 0.8rem 1.5rem;
   border-radius: 8px;
-  transition: transform 0.2s, opacity 0.2s;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  flex: 1; /* Make buttons take equal space */
+  font-size: 1rem;
+  font-weight: 500;
   gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  text-align: center; /* Center-align button content */
+  transition: transform 0.2s, opacity 0.2s, background-color 0.2s, box-shadow 0.2s;
 }
 
 .action-button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  opacity: 0.95;
+  transform: translateY(-2px);
+  background-color: darken(var(--primary-color), 10%);
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.action-button:focus {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+.action-button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.action-button .icon {
+  font-size: 1.2rem;
+}
+
+.action-button .button-text {
+  display: none; /* Hide text by default for compact buttons */
+}
+
+@media (min-width: 768px) {
+  .action-button .button-text {
+    display: inline; /* Show text on larger screens */
+  }
 }
 
 #jsonInput,
@@ -65,6 +107,13 @@ body {
   padding: 1.5rem;
   font-family: "Fira Code", monospace;
   font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#jsonInput:focus,
+#jsonOutput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--focus-color);
 }
 
 .loading-spinner {
@@ -93,6 +142,7 @@ body {
 @media (max-width: 768px) {
   .grid-container {
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 
   #jsonInput,
@@ -132,7 +182,7 @@ body {
 .tree-view .toggle.open::before {
   content: "▼";
 }
-/* Add this CSS to fix toggle functionality */
+
 .tree-view .hidden {
   display: none !important;
 }
@@ -146,6 +196,7 @@ body {
 .tree-view .toggle.open {
   transform: rotate(90deg);
 }
+
 .type-indicator {
   color: var(--primary-color);
   font-size: 0.8em;
@@ -193,4 +244,16 @@ body {
   margin-right: 8px;
   width: 14px;
   display: inline-block;
+}
+
+/* Button container styling for row layout */
+#button-container {
+  display: flex; /* Use flexbox for row layout */
+  justify-content: space-between; /* Add spacing between buttons */
+  align-items: center; /* Align buttons vertically */
+  gap: 1rem; /* Add consistent spacing between buttons */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+#jsonOutput {
+    display: none;
 }
