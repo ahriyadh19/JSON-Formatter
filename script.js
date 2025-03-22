@@ -1,3 +1,5 @@
+"use strict";
+
 // Add theme toggle functionality
 const themeToggle = document.getElementById('themeToggle');
 const currentTheme = localStorage.getItem('theme') || 'light';
