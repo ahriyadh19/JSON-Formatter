@@ -126,6 +126,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Actions for format, copy, paste, and clear buttons
 async function formatJSON() {
     const jsonInput = document.getElementById('jsonInput');
     const jsonOutput = document.getElementById('jsonOutput');
@@ -133,7 +134,7 @@ async function formatJSON() {
 
     try {
         if (!jsonInput.value) {
-            toastr.error("No JSON to format");
+            toastr.warning("No JSON to format");
             return;
         }
         loading.style.display = 'block';
@@ -142,6 +143,7 @@ async function formatJSON() {
         jsonOutput.innerHTML = '';
         jsonOutput.appendChild(createTreeView(parsed, true));
         jsonOutput.style.display = 'block'; // Show the output when data is available
+        toastr.success("Formatted JSON successfully");
 
     } catch (error) {
         toastr.error("Invalid JSON" < br > + error);
@@ -151,18 +153,18 @@ async function formatJSON() {
     }
 }
 
-
 async function copyToClipboard() {
     try {
         const output = document.getElementById('jsonOutput').textContent;
         if (!output) {
-            toastr.error("No JSON to copy");
+            toastr.warning("No JSON to copy");
             return;
+        } else {
+            await navigator.clipboard.writeText(output);
+            toastr.success("Copied to clipboard");
         }
-        await navigator.clipboard.writeText(output);
-        toastr.success("Copied to clipboard");
     } catch (error) {
-        toastr.error("Failed to copy text");
+        toastr.error("Failed to copy text" < br > + error);
     }
 }
 
@@ -173,12 +175,12 @@ async function pasteFromClipboard() {
         if (text) {
             toastr.success("Pasted from clipboard");
             formatJSON();
-        }else{
-            toastr.error("No text to paste");
+        } else {
+            toastr.warning("No text to paste");
         }
 
     } catch (error) {
-        toastr.error("Failed to paste text< br >" + error);
+        toastr.error("Failed to paste text" < br > + error);
     }
 }
 
@@ -186,11 +188,19 @@ function clearJSON() {
     const jsonInput = document.getElementById('jsonInput');
     const jsonOutput = document.getElementById('jsonOutput');
 
-    jsonInput.value = '';
-    jsonOutput.textContent = '';
-    jsonOutput.style.display = 'none'; // Hide the output when cleared
+    try {
+        if (!jsonInput.value && !jsonOutput.textContent) {
+            toastr.warning("No JSON to clear");
+            return;
+        }
+        jsonInput.value = '';
+        jsonOutput.textContent = '';
+        jsonOutput.style.display = 'none'; // Hide the output when cleared
+        toastr.success("Cleared JSON");
 
-    toastr.info("Cleared JSON");
+    } catch (error) {
+        toastr.error("Failed to clear JSON" < br > + error);
+    }
 }
 
 
