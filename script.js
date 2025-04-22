@@ -225,6 +225,24 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
     reader.readAsText(file);
 });
 
+function expandAll() {
+    const toggles = document.querySelectorAll('.toggle-visible');
+    toggles.forEach(toggle => {
+        toggle.classList.add('open');
+        const childUl = toggle.closest('li').querySelector('ul');
+        if (childUl) childUl.classList.remove('hidden');
+    });
+}
+
+function collapseAll() {
+    const toggles = document.querySelectorAll('.toggle-visible');
+    toggles.forEach(toggle => {
+        toggle.classList.remove('open');
+        const childUl = toggle.closest('li').querySelector('ul');
+        if (childUl) childUl.classList.add('hidden');
+    });
+}
+
 toastr.options = {
     "closeButton": true,
     "newestOnTop": true,
