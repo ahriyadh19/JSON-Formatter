@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+        content="A simple and efficient JSON Formatter tool to format, copy, paste, and clear JSON data.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
@@ -34,55 +36,63 @@
         </div>
     </header>
     <!-- Add loading spinner -->
-    <div id="loading" class="loading-spinner">
+    <div id="loading" class="loading-spinner" aria-hidden="true">
         <div class="spinner"></div>
     </div>
     <main class="container">
         <form>
             <div class="form-group">
-                <textarea id="jsonInput" class="form-control" rows="3" placeholder="Enter JSON here..."></textarea>
+                <textarea id="jsonInput" class="form-control" rows="3" placeholder="Enter JSON here..."
+                    aria-label="JSON Input"></textarea>
             </div>
             <!-- JSON file upload -->
             <div class="form-group my-2">
-                <input title="jsonFileInput" type="file" id="jsonFileInput" accept="application/json,.json"
-                    class="form-control">
+                <input title="Upload a JSON file" type="file" id="jsonFileInput" accept="application/json,.json" class="form-control"
+                    aria-label="Upload JSON File">
             </div>
             <div id="button-container">
-                <button type="button" onclick="formatJSON()" class="action-button" title="Format" id="formatJsonButton">
+                <button type="button" onclick="formatJSON()" class="action-button" title="Format" id="formatJsonButton"
+                    aria-label="Format JSON">
                     <i class="fas fa-code"></i>
                     <span class="button-text">Format</span>
                 </button>
                 <button type="button" id="copyJsonButton" onclick="copyToClipboard()" class="action-button"
-                    title="Copy">
+                    title="Copy" aria-label="Copy JSON">
                     <i class="fa-solid fa-copy icon"></i>
                     <span class="button-text">Copy</span>
                 </button>
                 <button type="button" id="pasteJsonButton" onclick="pasteFromClipboard()" class="action-button"
-                    title="Paste">
+                    title="Paste" aria-label="Paste JSON">
                     <i class="fa-solid fa-paste icon"></i>
                     <span class="button-text">Paste</span>
                 </button>
-                <button type="button" onclick="clearJSON()" class="action-button" id="clearJsonButton" title="Clear">
+                <button type="button" onclick="clearJSON()" class="action-button" id="clearJsonButton" title="Clear"
+                    aria-label="Clear JSON">
                     <i class="fa-solid fa-eraser icon"></i>
                     <span class="button-text">Clear</span>
                 </button>
-                <button type="button" id="expandJsonButton" onclick="expandAll()" class="action-button" title="Expand">
+                <button type="button" id="expandJsonButton" onclick="expandAll()" class="action-button" title="Expand"
+                    aria-label="Expand JSON">
                     <i class="fa-solid fa-plus"></i>
                     <span class="button-text">Expand</span>
                 </button>
-                <button type="button" id="collapseJsonButton" onclick="collapseAll()" class="action-button" title="Collapse">
+                <button type="button" id="collapseJsonButton" onclick="collapseAll()" class="action-button" title="Collapse"
+                    aria-label="Collapse JSON">
                     <i class="fa-solid fa-minus"></i>
                     <span class="button-text">Collapse</span>
                 </button>
             </div>
         </form>
 
-        <div id="jsonOutput" class="my-4"></div>
+        <div id="jsonOutput" class="my-4" aria-live="polite" aria-label="JSON Output">
+            <!-- Placeholder for JSON output -->
+            <p class="placeholder-text">Formatted JSON will appear here...</p>
+        </div>
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>

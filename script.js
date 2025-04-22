@@ -7,29 +7,27 @@ const currentTheme = localStorage.getItem('theme') || 'light';
 document.body.setAttribute('data-theme', currentTheme);
 themeToggle.innerHTML = currentTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
 
-themeToggle.addEventListener('click', () => {
+// Toggle theme and save preference
+function toggleTheme() {
     const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     document.body.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     themeToggle.innerHTML = newTheme === 'dark'
         ? '<i class="fa-solid fa-sun"></i>'
         : '<i class="fa-solid fa-moon"></i>';
-});
+}
 
+themeToggle.addEventListener('click', toggleTheme);
 
-// Add a function to toggle the visibility of Expand and Collapse buttons based on jsonOutput content
+// Toggle visibility of Expand and Collapse buttons
 function toggleExpandCollapseButtons() {
     const jsonOutput = document.getElementById('jsonOutput');
     const expandButton = document.getElementById('expandJsonButton');
     const collapseButton = document.getElementById('collapseJsonButton');
 
-    if (jsonOutput && jsonOutput.innerHTML.trim() !== '') {
-        expandButton.style.display = 'inline-block';
-        collapseButton.style.display = 'inline-block';
-    } else {
-        expandButton.style.display = 'none';
-        collapseButton.style.display = 'none';
-    }
+    const hasContent = jsonOutput && jsonOutput.innerHTML.trim() !== '';
+    expandButton.style.display = hasContent ? 'inline-block' : 'none';
+    collapseButton.style.display = hasContent ? 'inline-block' : 'none';
 }
 
 function createTreeView(obj, isRoot = false) {
@@ -131,7 +129,7 @@ function formatPrimitive(value, type) {
     }
 }
 
-// Add keyboard shortcuts
+// Add keyboard shortcuts for common actions
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
         copyToClipboard();
@@ -141,14 +139,14 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Actions for format, copy, paste, and clear buttons
+// Format JSON input and display output
 async function formatJSON() {
     const jsonInput = document.getElementById('jsonInput');
     const jsonOutput = document.getElementById('jsonOutput');
     const loading = document.getElementById('loading');
 
     try {
-        if (!jsonInput.value) {
+        if (!jsonInput.value.trim()) {
             toastr.warning("No JSON to format");
             return;
         }
@@ -157,32 +155,32 @@ async function formatJSON() {
         const parsed = JSON.parse(jsonInput.value);
         jsonOutput.innerHTML = '';
         jsonOutput.appendChild(createTreeView(parsed, true));
-        jsonOutput.style.display = 'block'; // Show the output when data is available
+        jsonOutput.style.display = 'block';
         toastr.success("Formatted JSON successfully");
-
     } catch (error) {
-        toastr.error("Invalid JSON: <br>" + error);
+        toastr.error("Invalid JSON: <br>" + error.message);
     } finally {
         loading.style.display = 'none';
     }
     toggleExpandCollapseButtons();
 }
 
+// Copy JSON output to clipboard
 async function copyToClipboard() {
     try {
         const output = document.getElementById('jsonOutput').textContent;
         if (!output) {
             toastr.warning("No JSON to copy");
             return;
-        } else {
-            await navigator.clipboard.writeText(output);
-            toastr.success("Copied to clipboard");
         }
+        await navigator.clipboard.writeText(output);
+        toastr.success("Copied to clipboard");
     } catch (error) {
-        toastr.error("Failed to copy text: <br>" + error);
+        toastr.error("Failed to copy text: <br>" + error.message);
     }
 }
 
+// Paste JSON from clipboard to input
 async function pasteFromClipboard() {
     try {
         const text = await navigator.clipboard.readText();
@@ -193,29 +191,24 @@ async function pasteFromClipboard() {
         } else {
             toastr.warning("No text to paste");
         }
-
     } catch (error) {
-        toastr.error("Failed to paste text: <br>" + error);
+        toastr.error("Failed to paste text: <br>" + error.message);
     }
 }
 
+// Clear JSON input and output
 function clearJSON() {
     const jsonInput = document.getElementById('jsonInput');
     const jsonOutput = document.getElementById('jsonOutput');
 
-    try {
-        if (!jsonInput.value && !jsonOutput.textContent) {
-            toastr.warning("No JSON to clear");
-            return;
-        }
-        jsonInput.value = '';
-        jsonOutput.textContent = '';
-        jsonOutput.style.display = 'none'; // Hide the output when cleared
-        toastr.success("Cleared JSON");
-
-    } catch (error) {
-        toastr.error("Failed to clear JSON: <br>" + error);
+    if (!jsonInput.value.trim() && !jsonOutput.textContent.trim()) {
+        toastr.warning("No JSON to clear");
+        return;
     }
+    jsonInput.value = '';
+    jsonOutput.textContent = '';
+    jsonOutput.style.display = 'none';
+    toastr.success("Cleared JSON");
     toggleExpandCollapseButtons();
 }
 
@@ -242,18 +235,18 @@ document.getElementById('jsonFileInput').addEventListener('change', function (ev
     reader.readAsText(file);
 });
 
+// Expand all JSON nodes
 function expandAll() {
-    const toggles = document.querySelectorAll('.toggle-visible');
-    toggles.forEach(toggle => {
+    document.querySelectorAll('.toggle-visible').forEach(toggle => {
         toggle.classList.add('open');
         const childUl = toggle.closest('li').querySelector('ul');
         if (childUl) childUl.classList.remove('hidden');
     });
 }
 
+// Collapse all JSON nodes
 function collapseAll() {
-    const toggles = document.querySelectorAll('.toggle-visible');
-    toggles.forEach(toggle => {
+    document.querySelectorAll('.toggle-visible').forEach(toggle => {
         toggle.classList.remove('open');
         const childUl = toggle.closest('li').querySelector('ul');
         if (childUl) childUl.classList.add('hidden');
@@ -261,9 +254,7 @@ function collapseAll() {
 }
 
 // Initialize button visibility on page load
-document.addEventListener('DOMContentLoaded', () => {
-    toggleExpandCollapseButtons();
-});
+document.addEventListener('DOMContentLoaded', toggleExpandCollapseButtons);
 
 toastr.options = {
     "closeButton": true,
@@ -280,4 +271,4 @@ toastr.options = {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
-}
+};

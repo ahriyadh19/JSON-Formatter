@@ -26,6 +26,7 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+/* Header styling */
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -33,6 +34,7 @@ body {
   padding: 1rem 0;
 }
 
+/* Theme toggle button */
 .theme-toggle {
   background: none;
   border: none;
@@ -48,6 +50,7 @@ body {
   background-color: var(--hover-color);
 }
 
+/* Action buttons */
 .action-button {
   align-items: center;
   background-color: var(--primary-color);
@@ -98,6 +101,26 @@ body {
   }
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  #jsonInput,
+  #jsonOutput {
+    padding: 1rem;
+    font-size: 13px;
+  }
+
+  .action-button {
+    padding: 0.6rem 1rem;
+    font-size: 14px;
+  }
+}
+
+/* JSON input and output styling */
 #jsonInput,
 #jsonOutput {
   background-color: var(--surface-color);
@@ -116,6 +139,7 @@ body {
   box-shadow: 0 0 4px var(--focus-color);
 }
 
+/* Loading spinner */
 .loading-spinner {
   display: none;
   position: fixed;
@@ -139,24 +163,7 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  #jsonInput,
-  #jsonOutput {
-    padding: 1rem;
-    font-size: 13px;
-  }
-
-  .action-button {
-    padding: 0.6rem 1rem;
-    font-size: 14px;
-  }
-}
-
+/* Tree view styling */
 .tree-view li {
   margin-left: 1.5rem;
   position: relative;
@@ -195,18 +202,6 @@ body {
 
 .tree-view .toggle.open {
   transform: rotate(90deg);
-}
-
-.type-indicator {
-  color: var(--primary-color);
-  font-size: 0.8em;
-  opacity: 0.7;
-  margin-left: 8px;
-}
-
-.toggle:not(.toggle-visible) {
-  visibility: hidden;
-  pointer-events: none;
 }
 
 /* Improved value type colors */
