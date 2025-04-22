@@ -48,7 +48,7 @@
                     class="form-control">
             </div>
             <div id="button-container">
-                <button type="button" onclick="formatJSON()" class="action-button" title="Format">
+                <button type="button" onclick="formatJSON()" class="action-button" title="Format" id="formatJsonButton">
                     <i class="fas fa-code"></i>
                     <span class="button-text">Format</span>
                 </button>
@@ -66,13 +66,13 @@
                     <i class="fa-solid fa-eraser icon"></i>
                     <span class="button-text">Clear</span>
                 </button>
-                <button type="button" onclick="expandAll()" class="action-button" title="Expand All">
+                <button type="button" id="expandJsonButton" onclick="expandAll()" class="action-button" title="Expand">
                     <i class="fa-solid fa-plus"></i>
-                    <span class="button-text">Expand All</span>
+                    <span class="button-text">Expand</span>
                 </button>
-                <button type="button" onclick="collapseAll()" class="action-button" title="Collapse All">
+                <button type="button" id="collapseJsonButton" onclick="collapseAll()" class="action-button" title="Collapse">
                     <i class="fa-solid fa-minus"></i>
-                    <span class="button-text">Collapse All</span>
+                    <span class="button-text">Collapse</span>
                 </button>
             </div>
         </form>

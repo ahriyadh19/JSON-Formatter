@@ -17,6 +17,21 @@ themeToggle.addEventListener('click', () => {
 });
 
 
+// Add a function to toggle the visibility of Expand and Collapse buttons based on jsonOutput content
+function toggleExpandCollapseButtons() {
+    const jsonOutput = document.getElementById('jsonOutput');
+    const expandButton = document.getElementById('expandJsonButton');
+    const collapseButton = document.getElementById('collapseJsonButton');
+
+    if (jsonOutput && jsonOutput.innerHTML.trim() !== '') {
+        expandButton.style.display = 'inline-block';
+        collapseButton.style.display = 'inline-block';
+    } else {
+        expandButton.style.display = 'none';
+        collapseButton.style.display = 'none';
+    }
+}
+
 function createTreeView(obj, isRoot = false) {
     const ul = document.createElement('ul');
     ul.className = 'tree-view';
@@ -150,6 +165,7 @@ async function formatJSON() {
     } finally {
         loading.style.display = 'none';
     }
+    toggleExpandCollapseButtons();
 }
 
 async function copyToClipboard() {
@@ -200,6 +216,7 @@ function clearJSON() {
     } catch (error) {
         toastr.error("Failed to clear JSON: <br>" + error);
     }
+    toggleExpandCollapseButtons();
 }
 
 // Add event listener for JSON file upload
@@ -242,6 +259,11 @@ function collapseAll() {
         if (childUl) childUl.classList.add('hidden');
     });
 }
+
+// Initialize button visibility on page load
+document.addEventListener('DOMContentLoaded', () => {
+    toggleExpandCollapseButtons();
+});
 
 toastr.options = {
     "closeButton": true,
