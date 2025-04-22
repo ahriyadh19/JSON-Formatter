@@ -202,6 +202,28 @@ function clearJSON() {
     }
 }
 
+// Add event listener for JSON file upload
+document.getElementById('jsonFileInput').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        try {
+            // Validate JSON
+            const text = e.target.result;
+            JSON.parse(text); // Throws if invalid
+            document.getElementById('jsonInput').value = text;
+            toastr.success('JSON file loaded');
+            formatJSON(); // Automatically format the JSON after loading
+        } catch (err) {
+            toastr.error('Invalid JSON file');
+        }
+    };
+    reader.onerror = function () {
+        toastr.error('Failed to read file');
+    };
+    reader.readAsText(file);
+});
 
 toastr.options = {
     "closeButton": true,
