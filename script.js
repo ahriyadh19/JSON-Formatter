@@ -20,14 +20,18 @@ function toggleTheme() {
 themeToggle.addEventListener('click', toggleTheme);
 
 // Toggle visibility of Expand and Collapse buttons
-function toggleExpandCollapseButtons() {
+function toggleButtons() {
     const jsonOutput = document.getElementById('jsonOutput');
     const expandButton = document.getElementById('expandJsonButton');
     const collapseButton = document.getElementById('collapseJsonButton');
+    const clearButton = document.getElementById('clearJsonButton');
+    const formatButton = document.getElementById('formatJsonButton');
+    const jsonInput = document.getElementById('jsonInput');
 
-    const hasContent = jsonOutput && jsonOutput.innerHTML.trim() !== '';
-    expandButton.style.display = hasContent ? 'inline-block' : 'none';
-    collapseButton.style.display = hasContent ? 'inline-block' : 'none';
+    expandButton.style.display = jsonOutput.innerHTML.trim() !== '' ? 'inline-block' : 'none';
+    collapseButton.style.display = jsonOutput.innerHTML.trim() !== '' ? 'inline-block' : 'none';
+    clearButton.style.display = jsonInput.value.trim() !== '' ? 'inline-block' : 'none';
+    formatButton.style.display = jsonInput.value.trim() !== '' ? 'inline-block' : 'none';
 }
 
 function createTreeView(obj, isRoot = false) {
@@ -162,23 +166,9 @@ async function formatJSON() {
     } finally {
         loading.style.display = 'none';
     }
-    toggleExpandCollapseButtons();
+    toggleButtons();
 }
 
-// Copy JSON output to clipboard
-async function copyToClipboard() {
-    try {
-        const output = document.getElementById('jsonOutput').textContent;
-        if (!output) {
-            toastr.warning("No JSON to copy");
-            return;
-        }
-        await navigator.clipboard.writeText(output);
-        toastr.success("Copied to clipboard");
-    } catch (error) {
-        toastr.error("Failed to copy text: <br>" + error.message);
-    }
-}
 
 // Paste JSON from clipboard to input
 async function pasteFromClipboard() {
@@ -209,7 +199,7 @@ function clearJSON() {
     jsonOutput.textContent = '';
     jsonOutput.style.display = 'none';
     toastr.success("Cleared JSON");
-    toggleExpandCollapseButtons();
+    toggleButtons();
 }
 
 // Add event listener for JSON file upload
@@ -254,7 +244,7 @@ function collapseAll() {
 }
 
 // Initialize button visibility on page load
-document.addEventListener('DOMContentLoaded', toggleExpandCollapseButtons);
+document.addEventListener('DOMContentLoaded', toggleButtons);
 
 toastr.options = {
     "closeButton": true,
