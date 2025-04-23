@@ -25,13 +25,11 @@ function toggleButtons() {
     const expandButton = document.getElementById('expandJsonButton');
     const collapseButton = document.getElementById('collapseJsonButton');
     const clearButton = document.getElementById('clearJsonButton');
-    const formatButton = document.getElementById('formatJsonButton');
     const jsonInput = document.getElementById('jsonInput');
 
     expandButton.style.display = jsonOutput.innerHTML.trim() !== '' ? 'inline-block' : 'none';
     collapseButton.style.display = jsonOutput.innerHTML.trim() !== '' ? 'inline-block' : 'none';
     clearButton.style.display = jsonInput.value.trim() !== '' ? 'inline-block' : 'none';
-    formatButton.style.display = jsonInput.value.trim() !== '' ? 'inline-block' : 'none';
 }
 
 function createTreeView(obj, isRoot = false) {
